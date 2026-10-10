@@ -1,0 +1,32 @@
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 25ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.9s
+  Running TypeScript ...
+  Finished TypeScript in 3.4s ...
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/3) ...
+✓ Generating static pages using 1 worker (3/3) in 70ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /about
+├ ƒ /api/health
+├ ƒ /api/orders
+├ ƒ /api/orders/[id]
+├ ƒ /api/quote
+├ ƒ /basket
+├ ƒ /checkout
+├ ƒ /kitchens
+├ ƒ /kitchens/[id]
+├ ƒ /orders
+└ ƒ /orders/[id]
+
+
+ƒ Proxy (Middleware)
+
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -1,0 +1,5 @@
+
+> jie_bulk_order-next@0.4.0 lint
+> biome lint src scripts next.config.ts
+
+Checked 73 files in 165ms. No fixes applied.

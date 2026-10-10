@@ -1,0 +1,21 @@
+
+> jie_bulk_order-next@0.4.0 test:security
+> node scripts/security-check.cjs
+
+PASS: Existing guest checkout and key-based retrieval remain available.
+PASS: Account records require their verified owner; even a correct guest key cannot bypass login.
+PASS: Account checkout cannot silently become a guest order or move to a different session.
+PASS: A client-supplied customer_id or unrequested account id does not grant ownership.
+PASS: Retrying an account order still requires the original owner and returns the same record.
+PASS: Account history is filtered by the server-verified user, excluding other users and unclaimed guests.
+PASS: Guest linking requires its key, is explicit/idempotent, and cannot reassign an already-owned record.
+PASS: Concurrent claims result in one owner, not an overwrite.
+PASS: Supabase configuration rejects REST paths, dashboard URLs, queries and URL credentials.
+PASS: The real SSR SDK stores session cookies as HttpOnly/SameSite=Lax/Secure in HTTPS production settings, using the publishable—not secret—key.
+PASS: Cookie user/role claims are not trusted: a fresh Auth-server getUser result determines identity.
+PASS: An expired session is refreshed through the real SDK, with updated cookies written server-side.
+PASS: A rejected/forged token does not authenticate and its local session cookies are cleared.
+PASS: The database health probe now uses a real GET response, closing the earlier permissive HEAD-check gap.
+PASS: A 404/empty response cannot be normalized into a successful health result.
+PASS: An account order’s idempotency/access key is not retained as a reusable guest credential in browser local storage.
+PASS: Authentication/session errors preserve an uncertain pending save; only definitive input rejection clears it.

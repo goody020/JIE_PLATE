@@ -1,0 +1,22 @@
+{
+  "scope": "Real application modules and SSR SDK; simulated Auth HTTP, disposable local database. Not a live Supabase email/account integration test.",
+  "passed": [
+    "Existing guest checkout and key-based retrieval remain available.",
+    "Account records require their verified owner; even a correct guest key cannot bypass login.",
+    "Account checkout cannot silently become a guest order or move to a different session.",
+    "A client-supplied customer_id or unrequested account id does not grant ownership.",
+    "Retrying an account order still requires the original owner and returns the same record.",
+    "Account history is filtered by the server-verified user, excluding other users and unclaimed guests.",
+    "Guest linking requires its key, is explicit/idempotent, and cannot reassign an already-owned record.",
+    "Concurrent claims result in one owner, not an overwrite.",
+    "Supabase configuration rejects REST paths, dashboard URLs, queries and URL credentials.",
+    "The real SSR SDK stores session cookies as HttpOnly/SameSite=Lax/Secure in HTTPS production settings, using the publishable—not secret—key.",
+    "Cookie user/role claims are not trusted: a fresh Auth-server getUser result determines identity.",
+    "An expired session is refreshed through the real SDK, with updated cookies written server-side.",
+    "A rejected/forged token does not authenticate and its local session cookies are cleared.",
+    "The database health probe now uses a real GET response, closing the earlier permissive HEAD-check gap.",
+    "A 404/empty response cannot be normalized into a successful health result.",
+    "An account order’s idempotency/access key is not retained as a reusable guest credential in browser local storage.",
+    "Authentication/session errors preserve an uncertain pending save; only definitive input rejection clears it."
+  ]
+}

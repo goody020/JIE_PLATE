@@ -1,0 +1,2 @@
+PASS: a production-built Next.js server retrieves the same local record after restarting.
+PASS: missing Supabase configuration fails explicitly instead of silently using local SQLite.

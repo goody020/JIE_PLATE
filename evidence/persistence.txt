@@ -1,0 +1,6 @@
+
+> jie_bulk_order-next@0.4.0 test:persistence
+> node scripts/persistence-check.cjs
+
+PASS: a production-built Next.js server retrieves the same local record after restarting.
+PASS: missing Supabase configuration fails explicitly instead of silently using local SQLite.

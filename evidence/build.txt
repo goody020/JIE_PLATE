@@ -1,0 +1,56 @@
+
+> jie_bulk_order-next@0.4.0 prebuild
+> node scripts/check-node.cjs
+
+
+> jie_bulk_order-next@0.4.0 build
+> next build --webpack
+
+▲ Next.js 16.3.5 (webpack)
+✓ Running next.config.ts took 364ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 11.2s
+  Running TypeScript ...
+  Finished TypeScript in 4.4s ...
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/7) ...
+  Generating static pages using 1 worker (1/7) 
+  Generating static pages using 1 worker (3/7) 
+  Generating static pages using 1 worker (5/7) 
+✓ Generating static pages using 1 worker (7/7) in 262ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /about
+├ ƒ /account
+├ ƒ /api/account/orders
+├ ƒ /api/auth/confirm
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/session
+├ ƒ /api/auth/signup
+├ ƒ /api/health
+├ ƒ /api/orders
+├ ƒ /api/orders/[id]
+├ ƒ /api/orders/[id]/claim
+├ ƒ /api/quote
+├ ƒ /auth/confirm
+├ ƒ /basket
+├ ƒ /checkout
+├ ƒ /confirm-email
+├ ƒ /kitchens
+├ ƒ /kitchens/[id]
+├ ƒ /login
+├ ƒ /orders
+├ ƒ /orders/[id]
+└ ƒ /signup
+
+
+ƒ Proxy (Middleware)
+
+ƒ  (Dynamic)  server-rendered on demand
+

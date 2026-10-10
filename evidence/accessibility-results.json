@@ -1,0 +1,35 @@
+{
+  "scope": "Automated WCAG 2 A/AA and 2.1 AA tagged checks. Auth UI responses simulated; no actual Supabase email/login connection.",
+  "states": {
+    "unconfigured-login": {
+      "violations": [],
+      "manualReview": 0,
+      "passes": 19
+    },
+    "signup-desktop": {
+      "violations": [],
+      "manualReview": 0,
+      "passes": 25
+    },
+    "signup-mobile": {
+      "violations": [],
+      "manualReview": 0,
+      "passes": 25
+    },
+    "login-mobile": {
+      "violations": [],
+      "manualReview": 0,
+      "passes": 25
+    },
+    "account-mobile-simulated": {
+      "violations": [],
+      "manualReview": 0,
+      "passes": 20
+    },
+    "confirmation-mobile-simulated": {
+      "violations": [],
+      "manualReview": 0,
+      "passes": 20
+    }
+  }
+}
