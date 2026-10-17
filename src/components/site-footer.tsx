@@ -27,9 +27,9 @@ export function SiteFooter() {
           <div>
             <h2 className="mb-5 text-sm font-bold uppercase tracking-wider text-white">Contact</h2>
             <div className="flex flex-col gap-4 text-sm text-[#a0a0a0]">
-              <Link href="/support" className="hover:text-[#FF5500]">WhatsApp support (number to be added)</Link>
+              <a href="https://wa.me/2349131246555" target="_blank" rel="noreferrer" className="hover:text-[#FF5500]">WhatsApp: +234 913 124 6555</a>
               <span>Support hours: Mon to Sun, 8am to 9pm</span>
-              <Link href="/support" className="hover:text-[#FF5500]">Contact us</Link>
+              <a href="mailto:ibiyemiemma11@gmail.com" className="hover:text-[#FF5500]">Email: ibiyemiemma11@gmail.com</a>
             </div>
           </div>
 
