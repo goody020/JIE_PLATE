@@ -1,126 +1,67 @@
 import type { Metadata } from "next";
-export const metadata: Metadata = { title: "About this build" };
+import Link from "next/link";
+
+export const metadata: Metadata = { title: "About Bufer Feast" };
+
 export default function About() {
   return (
-    <div className="shell page-space narrow-page">
-      <p className="eyebrow">JIE_BULK_ORDER · NEXT.JS BUILD 04</p>
-      <h1 className="page-title">
-        A working prototype.
-        <br />
-        <em>Not a live service.</em>
-      </h1>
+    <main className="shell page-space narrow-page">
+      <p className="eyebrow">ABOUT BUFER FEAST</p>
+      <h1 className="page-title">Food for every table.</h1>
       <p className="page-intro">
-        A learning project for ordering bulk food for homes in Lagos. This
-        version migrates the working discovery, basket and test-order flow into
-        React components and Next.js routes.
+        Bufer Feast is an online marketplace that connects people who need food
+        in bulk with cooks who prepare it well. Whether it is a personal meal,
+        wedding, naming ceremony, birthday, funeral, office lunch, or family
+        gathering, we help you find the right cook, place your order, and get
+        your food on the day you need it.
       </p>
+
       <section className="about-block">
-        <h2>What you can try</h2>
+        <h2>Why we exist</h2>
+        <p>
+          Ordering food for a crowd should not be a gamble. Too often, buyers
+          search through chats and referrals, pay deposits to people they barely
+          know, and hope the food arrives as promised. Meanwhile, talented
+          cooks struggle to reach customers beyond their own circle and spend
+          too much time chasing payments. We created Bufer Feast to fix both
+          sides of that problem.
+        </p>
+      </section>
+
+      <section className="about-block">
+        <h2>What we believe</h2>
         <ul>
-          <li>
-            Choose an example area and date, browse sample kitchens and select
-            packs.
-          </li>
-          <li>
-            Build a single-kitchen basket, with quantities and explicit
-            replacement when switching kitchens.
-          </li>
-          <li>
-            Get a server-calculated test quote and save a fictional order.
-          </li>
-          <li>
-            Retrieve that record after refreshing. Retry an interrupted save
-            without creating a duplicate.
-          </li>
+          <li><strong>Trust comes first.</strong> Good food and honest dealing build lasting customers.</li>
+          <li><strong>Cooks deserve fair treatment.</strong> Their skill is the heart of every celebration.</li>
+          <li><strong>Clear beats complicated.</strong> Prices, dates, and terms should be easy to understand.</li>
+          <li><strong>Every table matters.</strong> Whether you are feeding 10 people or 100.</li>
         </ul>
       </section>
-      <section className="about-block" id="stack">
-        <h2>A current, deliberate stack.</h2>
-        <div className="about-stack">
-          <div>
-            <strong>Next.js + React + TypeScript</strong>
-            <span>
-              Real page routes, reusable components and server-side API
-              handlers.
-            </span>
-          </div>
-          <div>
-            <strong>Tailwind CSS + shadcn/ui</strong>
-            <span>
-              Shared styling and selected UI primitives, with JIE_Bulk_order’s own
-              visual design.
-            </span>
-          </div>
-          <div>
-            <strong>Supabase is the selected target</strong>
-            <span>
-              The server adapter and database migration are prepared. Your
-              project must be configured before cloud storage works.
-            </span>
-          </div>
-          <div>
-            <strong>Local test mode remains available</strong>
-            <span>
-              A clearly labelled SQLite adapter lets the flow run without
-              external credentials or subscriptions.
-            </span>
-          </div>
+
+      <section className="about-block">
+        <h2>How it works</h2>
+        <p>
+          We sit between the buyer and the cook. Buyers browse cooks by
+          category, choose their quantity and date, and order in one place.
+          Cooks reach more customers, receive organized orders, and get paid
+          for the food they deliver. We aim to protect both sides of every
+          order.
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link href="/kitchens" className="rounded-xl bg-[#FF5500] px-5 py-3 font-bold text-white">Find food</Link>
+          <Link href="/signup" className="rounded-xl border border-[#444] px-5 py-3 font-bold text-white">Join as a cook</Link>
         </div>
-        <p>
-          Checkout reports the active storage mode. A missing or incorrect
-          Supabase configuration is an error—not a reason to silently claim that
-          cloud storage worked.
-        </p>
       </section>
+
       <section className="about-block">
-        <h2>Customer accounts, with clear boundaries.</h2>
+        <h2>Contact</h2>
         <p>
-          This build includes signup, email confirmation, login/logout and
-          account-owned test orders. Supabase project settings, a publishable
-          key, the ownership migration and a manual email/login test are
-          required before calling the account integration connected.
+          Support is available every day from 8am to 9pm. Use the contact page
+          to reach the Bufer Feast team while the official WhatsApp number is
+          being finalized.
         </p>
-        <p>
-          Signed-in account orders require that account's verified session.
-          Older guest records stay separate unless their key holder explicitly
-          links them. Passwords are handled by Supabase Auth, not the order
-          table.
-        </p>
-        <p>
-          Use your own controlled email for an account test and fictional
-          delivery details for orders. Vendor/admin tools, uploads, payments,
-          real kitchen acceptance, delivery booking, password recovery, account
-          deletion and refund workflows are not implemented.
-        </p>
-        <p>
-          The default Supabase email sender is for limited project-team testing.
-          General customer signup needs suitable email-delivery setup; no paid
-          service was activated here. Production privacy, security, food-safety
-          and commercial review is still required.
-        </p>
+        <Link href="/support" className="rounded-xl border border-[#444] px-5 py-3 font-bold text-white">Contact us</Link>
       </section>
-      <section className="about-block">
-        <h2>For food makers</h2>
-        <p>
-          The longer-term idea includes home cooks, caterers and restaurants.
-          Vendor applications are not open. We are not collecting identity
-          documents, bank details or real menus through this prototype.
-        </p>
-      </section>
-      <section className="about-block">
-        <h2>Our assumptions are visible.</h2>
-        <p>
-          Kitchens, food prices, delivery fees, availability and menu
-          descriptions are fictional. Food images are AI-generated. The 1–2 day
-          lead times, 30-day window, one-kitchen basket and 99-pack cap are
-          learning assumptions, not approved operating policies.
-        </p>
-        <p>
-          No real tax or service-fee policy is implemented. Pack volume does not
-          guarantee servings, and recipe/allergen information is unverified. No
-          product-manager or website-manager approval is claimed.
-        </p>
-      </section>
-    </div>
+    </main>
   );
 }

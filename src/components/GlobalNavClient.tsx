@@ -62,7 +62,7 @@ export default function GlobalNavClient({
           </span>
 
           <span className="text-white font-bold tracking-tight">
-            JIE_BULK_ORDER
+            Bufer Feast
           </span>
         </Link>
 
@@ -167,7 +167,7 @@ export default function GlobalNavClient({
             </Link>
           </nav>
         ) : (
-          <nav className="hidden md:flex items-center gap-6 text-sm font-bold">
+          <nav className="flex items-center gap-3 overflow-x-auto text-xs font-bold md:gap-6 md:text-sm">
             <Link
               href="/"
               className="text-[#a0a0a0] hover:text-white"

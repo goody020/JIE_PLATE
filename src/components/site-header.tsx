@@ -20,7 +20,8 @@ export function SiteHeader() {
   }, []);
 
   const navLinks = [
-    { href: "kitchens", label: "Find food" },
+    { href: "/", label: "Home" },
+    { href: "/kitchens", label: "Find food" },
     { href: "/how-it-works", label: "How it works" },
     { href: "/orders", label: "My orders" },
   ];
@@ -45,7 +46,7 @@ export function SiteHeader() {
                 <Utensils size={20} />
               </div>
               <span className="text-2xl font-bold text-gray-900 tracking-tight">
-                jie_bulk_order<span className="text-green-600">.</span>
+                Bufer Feast<span className="text-green-600">.</span>
               </span>
             </Link>
 

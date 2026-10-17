@@ -17,7 +17,7 @@ export default function VendorSignupPage() {
           </p>
 
           <h1 className="text-3xl font-bold text-slate-900">
-            Apply to sell with Fernami
+            Apply to sell with Bufer Feast
           </h1>
 
           <p className="mx-auto mt-3 max-w-2xl text-slate-600">
@@ -371,6 +371,21 @@ export default function VendorSignupPage() {
               </div>
             </div>
           </section>
+
+          <label className="flex items-start gap-3 rounded-xl border border-slate-200 p-4 text-sm leading-6 text-slate-700">
+            <input
+              type="checkbox"
+              name="commission_terms"
+              value="accepted"
+              required
+              className="mt-1 h-4 w-4 accent-orange-600"
+            />
+            <span>
+              I understand that Bufer Feast charges a 10% commission on every
+              completed order, and I agree to the applicable terms and
+              conditions.
+            </span>
+          </label>
 
           {/* Process notice */}
           <div className="rounded-xl bg-orange-50 p-4 text-sm leading-6 text-orange-900">

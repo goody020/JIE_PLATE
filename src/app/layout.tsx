@@ -16,8 +16,8 @@ const dmSans = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "JIE PLATE â€” Taste the Culture",
-    template: "%s | JIE PLATE",
+    default: "Bufer Feast â€” Taste the Culture",
+    template: "%s | Bufer Feast",
   },
   icons: {
     icon: "/favicon.svg",

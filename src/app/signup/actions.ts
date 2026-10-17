@@ -130,6 +130,9 @@ function getFileExtension(file: File) {
 }
 
 export async function registerVendor(formData: FormData) {
+  if (formData.get("commission_terms") !== "accepted") {
+    throw new Error("You must accept the Bufer Feast commission terms.");
+  }
   const email = getField(formData, "email").toLowerCase();
   const password = getField(formData, "password");
 

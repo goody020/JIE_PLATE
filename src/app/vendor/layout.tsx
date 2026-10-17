@@ -13,7 +13,7 @@ export default function VendorDashboardLayout({ children }: { children: React.Re
             <div className="w-8 h-8 bg-[#183e32] rounded-lg flex items-center justify-center">
               <ChefHat size={20} className="text-[#90a765]" />
             </div>
-            <span className="font-bold text-xl tracking-tight">JIE PLATE<span className="text-[#90a765]">.</span></span>
+            <span className="font-bold text-xl tracking-tight">Bufer Feast<span className="text-[#90a765]">.</span></span>
           </Link>
           <p className="text-xs text-gray-400 mt-2 ml-10 font-medium uppercase tracking-wider">Vendor Portal</p>
         </div>

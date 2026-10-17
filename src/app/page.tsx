@@ -90,7 +90,7 @@ export default function HomePage() {
 
         {/* Business Name Badge */}
         <div className="mb-6 text-4xl font-black uppercase tracking-[0.18em] text-[#FF5500] sm:text-5xl md:text-6xl">
-  JIE PLATE
+  Bufer Feast
 </div>
 
         {/* New Badge */}
@@ -279,7 +279,7 @@ export default function HomePage() {
       <section className="py-24 px-4 bg-[#0f0f0f] border-t border-[#222]">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Why Choose JIE PLATE?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Why Choose Bufer Feast?</h2>
             <p className="text-[#a0a0a0] max-w-2xl mx-auto text-lg">We're not just another food app. We're a movement.</p>
           </div>
 

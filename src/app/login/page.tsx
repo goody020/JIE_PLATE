@@ -57,7 +57,7 @@ export default function LoginPage() {
           </h1>
 
           <p className="text-[#a0a0a0] text-sm mt-2">
-            Sign in to your JIE PLATE account.
+            Sign in to your Bufer Feast account.
           </p>
         </div>
 

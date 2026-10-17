@@ -12,7 +12,7 @@ export default function CustomerSignupPage() {
           <div className="inline-flex items-center justify-center w-14 h-14 bg-[#FF5500] rounded-full mb-4">
             <User size={28} className="text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Join JIE PLATE</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Join Bufer Feast</h1>
           <p className="text-[#a0a0a0] text-sm">Order delicious bulk meals from your favorite local kitchens.</p>
         </div>
 

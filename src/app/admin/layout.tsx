@@ -31,7 +31,7 @@ export default function AdminLayout({
           </Link>
 
           <p className="text-xs text-gray-400 mt-3 uppercase tracking-wider">
-            JIE PLATE
+            Bufer Feast
           </p>
         </div>
 

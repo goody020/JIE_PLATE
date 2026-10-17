@@ -448,7 +448,5 @@ export async function placeOrderAction(formData: FormData) {
   revalidatePath("/vendor/prep-sheet");
   revalidatePath("/admin/orders");
 
-  redirect(
-    `/orders/${order.id}?success=true`,
-  );
+  redirect(`/api/payments/initialize?order_id=${encodeURIComponent(order.id)}`);
 }
