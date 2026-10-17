@@ -1,19 +1,18 @@
 "use server";
 
-import { createClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { adminClient } from "@/lib/server/admin";
 
 export async function submitSupportRequest(formData: FormData) {
-  const email = formData.get("email") as string;
-  const subject = formData.get("subject") as string;
-  const message = formData.get("message") as string;
+  const email = String(formData.get("email") || "").trim().slice(0, 160);
+  const subject = String(formData.get("subject") || "").trim().slice(0, 120);
+  const message = String(formData.get("message") || "").trim().slice(0, 4000);
 
-  const { error } = await supabase.from("support_requests").insert({
+  if (!email || !email.includes("@") || !subject || !message) {
+    throw new Error("Email, subject, and message are required.");
+  }
+
+  const { error } = await adminClient().from("support_requests").insert({
     email,
     subject,
     message,
@@ -21,7 +20,7 @@ export async function submitSupportRequest(formData: FormData) {
   });
 
   if (error) {
-    console.error("Support request error:", error);
+    console.error("Support request error:", error.message);
     throw new Error("Failed to submit support request. Please try again.");
   }
 

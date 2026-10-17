@@ -32,6 +32,22 @@ export default async function SupportPage() {
               Have a complaint, question, or need to update your business details? 
               Our admin team will get back to you shortly.
             </p>
+            <div className="mt-5 flex flex-wrap justify-center gap-3 text-sm font-bold">
+              <a
+                href="https://wa.me/2349131246555"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-lg bg-[#25D366] px-4 py-3 text-black"
+              >
+                WhatsApp us · +234 913 124 6555
+              </a>
+              <a
+                href="mailto:ibiyemiemma11@gmail.com"
+                className="rounded-lg border border-[#555] px-4 py-3 text-white"
+              >
+                Email support
+              </a>
+            </div>
           </div>
 
           <form action={submitSupportRequest} className="space-y-6">
