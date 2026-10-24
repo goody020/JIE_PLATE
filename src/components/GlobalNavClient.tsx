@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useTransition } from "react";
-import {
+import { useState, useTransition } from "react";
+import { 
   BarChart3,
   ClipboardCheck,
   ClipboardList,
   LogOut,
+  Menu,
   Settings,
+  X,
   ShieldCheck,
   ShoppingBag,
   Store,
@@ -27,6 +29,7 @@ export default function GlobalNavClient({
   accountStatus,
 }: GlobalNavClientProps) {
   const [loggingOut, startTransition] = useTransition();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   function handleLogout() {
     startTransition(async () => {
@@ -44,8 +47,34 @@ export default function GlobalNavClient({
   const isPendingVendor =
     role === "vendor" && accountStatus !== "approved";
 
+  const mobileLinks = isAdmin
+    ? [
+        ["Admin Dashboard", "/admin"],
+        ["Vendor Applications", "/admin/vendor-applications"],
+        ["Orders", "/admin/orders"],
+        ["Security", "/admin/security"],
+        ["Marketplace", "/kitchens"],
+      ]
+    : isApprovedVendor
+      ? [
+          ["Dashboard", "/vendor/dashboard"],
+          ["Menus", "/vendor/menus"],
+          ["Orders", "/vendor/orders"],
+          ["Prep Sheet", "/vendor/prep-sheet"],
+          ["Settings", "/vendor/settings"],
+        ]
+      : isPendingVendor
+        ? [["Application status", "/vendor/pending"], ["Home", "/"]]
+        : [
+            ["Home", "/"],
+            ["Find Food", "/kitchens"],
+            ["Basket", "/basket"],
+            ["My Orders", "/orders"],
+            ["Account", "/account"],
+          ];
+
   return (
-    <header className="sticky top-0 z-40 bg-[#0a0a0a] border-b border-[#333333]">
+    <header className="sticky top-0 z-40 relative bg-[#0a0a0a] border-b border-[#333333]">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-6">
         <Link
           href={
@@ -167,7 +196,7 @@ export default function GlobalNavClient({
             </Link>
           </nav>
         ) : (
-          <nav className="flex items-center gap-3 overflow-x-auto text-xs font-bold md:gap-6 md:text-sm">
+          <nav className="hidden items-center gap-6 text-sm font-bold md:flex">
             <Link
               href="/"
               className="text-[#a0a0a0] hover:text-white"
@@ -210,13 +239,50 @@ export default function GlobalNavClient({
             type="button"
             onClick={handleLogout}
             disabled={loggingOut}
-            className="flex items-center gap-2 rounded-xl bg-red-500/10 px-4 py-2 text-sm font-bold text-red-400 hover:bg-red-500/20 disabled:opacity-50"
+            className="hidden items-center gap-2 rounded-xl bg-red-500/10 px-4 py-2 text-sm font-bold text-red-400 hover:bg-red-500/20 disabled:opacity-50 md:flex"
           >
             <LogOut size={16} />
             {loggingOut ? "Logging out..." : "Logout"}
           </button>
         )}
+        <button
+          type="button"
+          aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen((open) => !open)}
+          className="rounded-xl border border-[#444] p-2 text-white md:hidden"
+        >
+          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </div>
+
+      {mobileOpen && (
+        <div className="absolute left-4 right-4 top-[4.5rem] rounded-2xl border border-[#333] bg-[#111] p-3 shadow-2xl md:hidden">
+          <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
+            {mobileLinks.map(([label, href]) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMobileOpen(false)}
+                className="rounded-xl px-4 py-3 text-sm font-bold text-[#d0d0d0] hover:bg-[#222] hover:text-white"
+              >
+                {label}
+              </Link>
+            ))}
+            {isLoggedIn && (
+              <button
+                type="button"
+                onClick={handleLogout}
+                disabled={loggingOut}
+                className="mt-2 flex w-full items-center gap-2 rounded-xl border-t border-[#333] px-4 py-3 text-left text-sm font-bold text-red-400 disabled:opacity-50"
+              >
+                <LogOut size={16} />
+                {loggingOut ? "Logging out..." : "Logout"}
+              </button>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
