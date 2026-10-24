@@ -3,6 +3,7 @@ import "server-only";
 import crypto from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { canonicalSupabaseUrl } from "@/lib/server/supabase-url";
+import { createShipbubbleShipment } from "@/lib/server/shipbubble";
 
 const PAYSTACK_API = "https://api.paystack.co";
 
@@ -115,7 +116,7 @@ export async function markOrderPaid(reference: string) {
   });
   const { data: order, error: orderError } = await client
     .from("orders")
-    .select("id, total_price, payment_status")
+    .select("id, total_price, delivery_fee, payment_status, shipbubble_request_token, shipbubble_service_code, shipbubble_courier_id")
     .eq("id", orderId)
     .eq("payment_reference", reference)
     .maybeSingle();
@@ -123,7 +124,7 @@ export async function markOrderPaid(reference: string) {
   if (orderError) throw new Error(orderError.message);
   if (!order) return { paid: false, payment };
 
-  const expectedKobo = Math.round(Number(order.total_price) * 100);
+  const expectedKobo = Math.round((Number(order.total_price) + Number(order.delivery_fee || 0)) * 100);
   if (payment.amount !== expectedKobo) {
     throw new Error("Paystack amount does not match the order amount.");
   }
@@ -140,6 +141,36 @@ export async function markOrderPaid(reference: string) {
       .eq("payment_reference", reference)
       .neq("payment_status", "paid");
     if (error) throw new Error(error.message);
+  }
+
+  if (
+    order.shipbubble_request_token &&
+    order.shipbubble_service_code &&
+    order.shipbubble_courier_id
+  ) {
+    try {
+      const shipment = await createShipbubbleShipment({
+        request_token: order.shipbubble_request_token,
+        service_code: order.shipbubble_service_code,
+        courier_id: order.shipbubble_courier_id,
+      });
+      const shipmentData = shipment.data || {};
+      await client
+        .from("orders")
+        .update({
+          delivery_provider: "shipbubble",
+          delivery_status: shipmentData.status || "pending",
+          shipbubble_order_id: shipmentData.order_id,
+          shipbubble_tracking_url: shipmentData.tracking_url || null,
+        })
+        .eq("id", order.id);
+    } catch (error) {
+      console.error("Shipbubble shipment creation failed after payment", error);
+      await client
+        .from("orders")
+        .update({ delivery_provider: "shipbubble", delivery_status: "shipment_pending" })
+        .eq("id", order.id);
+    }
   }
 
   return { paid: true, payment, orderId };

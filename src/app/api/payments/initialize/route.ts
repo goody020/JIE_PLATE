@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     const client = await authClient();
     const { data: order, error } = await client
       .from("orders")
-      .select("id, total_price, payment_status, payment_reference")
+      .select("id, total_price, delivery_fee, payment_status, payment_reference")
       .eq("id", orderId)
       .eq("user_id", customer.id)
       .maybeSingle();
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
     const payment = await initializePaystackPayment({
       email: customer.email,
       orderId: order.id,
-      amountNaira: Number(order.total_price),
+      amountNaira: Number(order.total_price) + Number(order.delivery_fee || 0),
     });
 
     const { error: updateError } = await client

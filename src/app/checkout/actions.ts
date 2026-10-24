@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { authClient, requireCustomer } from "@/lib/server/auth";
+import { requestShipbubbleRates, validateShipbubbleAddress } from "@/lib/server/shipbubble";
 
 interface SubmittedCartItem {
   id?: string;
@@ -442,6 +443,72 @@ export async function placeOrderAction(formData: FormData) {
 
     throw new Error(itemsError.message);
   }
+
+  const { data: customerProfile } = await client
+    .from("profiles")
+    .select("phone")
+    .eq("id", customer.id)
+    .maybeSingle();
+  const { data: pickup } = await client
+    .from("public_vendor_profiles")
+    .select("display_name, location")
+    .eq("id", vendorId)
+    .maybeSingle();
+
+  const pickupPhone = process.env.SHIPBUBBLE_PICKUP_PHONE || customerProfile?.phone || "";
+  if (!pickup?.location || !pickupPhone) {
+    throw new Error("A complete kitchen pickup address and phone number are required for delivery.");
+  }
+
+  const [sender, receiver] = await Promise.all([
+    validateShipbubbleAddress({
+      name: pickup.display_name || "Bufer Feast kitchen",
+      email: customer.email,
+      phone: pickupPhone,
+      address: pickup.location,
+    }),
+    validateShipbubbleAddress({
+      name: customer.name || customer.email,
+      email: customer.email,
+      phone: customerProfile?.phone || pickupPhone,
+      address: deliveryAddress,
+    }),
+  ]);
+
+  const rateResponse = await requestShipbubbleRates({
+    sender_address_code: sender.data.address_code,
+    reciever_address_code: receiver.data.address_code,
+    pickup_date: scheduledTime ? scheduledTime.slice(0, 10) : new Date(Date.now() + 86400000).toISOString().slice(0, 10),
+    category_id: Number(process.env.SHIPBUBBLE_CATEGORY_ID || "69709726"),
+    package_items: orderItems.map((item) => ({
+      name: item.dish_name,
+      description: "Prepared food order",
+      unit_weight: "2",
+      unit_amount: String(Math.round(item.total_price / Math.max(1, item.headcount))),
+      quantity: String(item.headcount),
+    })),
+    package_dimension: { length: 30, width: 20, height: 15 },
+    delivery_instructions: "Keep upright and handle with care.",
+  });
+  const rates = Array.isArray(rateResponse.data?.couriers) ? rateResponse.data.couriers : [];
+  const selectedRate = rates.find((rate: { service_type?: string }) => rate.service_type === "pickup") || rates[0];
+  if (!selectedRate) throw new Error("No Shipbubble delivery rate is available for this address.");
+
+  const { error: deliveryError } = await client
+    .from("orders")
+    .update({
+      delivery_provider: "shipbubble",
+      delivery_status: "rate_selected",
+      delivery_fee: Number(selectedRate.total || selectedRate.rate_card_amount || 0),
+      shipbubble_request_token: rateResponse.data.request_token,
+      shipbubble_service_code: selectedRate.service_code,
+      shipbubble_courier_id: String(selectedRate.courier_id),
+      shipbubble_courier_name: selectedRate.courier_name,
+      shipbubble_rate_amount: Number(selectedRate.total || selectedRate.rate_card_amount || 0),
+    })
+    .eq("id", order.id)
+    .eq("user_id", customer.id);
+  if (deliveryError) throw new Error(deliveryError.message);
 
   revalidatePath("/orders");
   revalidatePath("/vendor/orders");

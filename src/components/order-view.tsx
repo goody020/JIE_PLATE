@@ -96,6 +96,11 @@ export async function OrderView({
         headcount,
         total_price,
         status,
+        payment_status,
+        delivery_provider,
+        delivery_status,
+        delivery_fee,
+        shipbubble_tracking_url,
         created_at,
         order_items (
           id,
@@ -128,6 +133,11 @@ export async function OrderView({
     headcount: number | null;
     total_price: number | null;
     status: string;
+    payment_status: string | null;
+    delivery_provider: string | null;
+    delivery_status: string | null;
+    delivery_fee: number | null;
+    shipbubble_tracking_url: string | null;
     created_at: string;
     order_items:
       | Array<{
@@ -267,6 +277,19 @@ export async function OrderView({
 
               {new Date(order.created_at).toLocaleString()}
             </p>
+          </div>
+        </div>
+
+        <div className="mb-6 rounded-2xl border border-[#333333] bg-[#111111] p-6">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-xs uppercase text-[#a0a0a0]">Delivery</p>
+              <p className="mt-1 font-bold capitalize text-white">{statusLabel(order.delivery_status || "awaiting shipment")}</p>
+              {order.delivery_fee ? <p className="mt-1 text-sm text-[#a0a0a0]">Delivery fee: ₦{Number(order.delivery_fee).toLocaleString("en-NG")}</p> : null}
+            </div>
+            {order.shipbubble_tracking_url && (
+              <a href={order.shipbubble_tracking_url} target="_blank" rel="noreferrer" className="rounded-xl bg-[#FF5500] px-4 py-3 text-sm font-bold text-white">Track delivery</a>
+            )}
           </div>
         </div>
 
