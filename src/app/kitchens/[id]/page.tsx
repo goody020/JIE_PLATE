@@ -117,7 +117,7 @@ export default function KitchenProfilePage() {
 
     const headcount = quantities[menu.id] || menu.base_servings || 1;
 
-    const result = addToCart({
+    addToCart({
       id: menu.id,
       menu_id: menu.id,
       vendor_id: vendor.id,
@@ -128,13 +128,6 @@ export default function KitchenProfilePage() {
       baseServings: menu.base_servings,
       totalPrice: menu.price_per_serving * headcount,
     });
-
-    if (result === "different-vendor") {
-      setMessage(
-        "Your basket already contains food from another kitchen. Complete that basket before choosing this kitchen.",
-      );
-      return;
-    }
 
     setMessage(`${menu.title} added to your basket.`);
     setAdded((current) => ({ ...current, [menu.id]: true }));

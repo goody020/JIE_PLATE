@@ -68,10 +68,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [items, ready]);
 
   const addToCart = (item: CartItem) => {
-    if (items.length > 0 && items[0].vendor_id !== item.vendor_id) {
-      return "different-vendor";
-    }
-
     const existing = items.find((current) => current.id === item.id);
 
     if (existing) {

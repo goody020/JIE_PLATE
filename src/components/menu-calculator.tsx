@@ -29,7 +29,7 @@ export function MenuCalculator({ menu }: { menu: any }) {
       baseServings: menu.base_servings,
       totalPrice: calculatedPrice,
     });
-    router.push("/checkout");
+    router.push(`/basket`);
   };
 
   return (

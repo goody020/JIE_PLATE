@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   AlertCircle,
@@ -27,7 +28,17 @@ interface Address {
 }
 
 export default function CheckoutPage() {
-  const { items, total, ready } = useCart();
+  const { items, ready } = useCart();
+  const searchParams = useSearchParams();
+  const vendorId = searchParams.get("vendor");
+  const checkoutItems = useMemo(
+    () => vendorId ? items.filter((item) => item.vendor_id === vendorId) : items,
+    [items, vendorId],
+  );
+  const checkoutTotal = useMemo(
+    () => checkoutItems.reduce((sum, item) => sum + item.totalPrice, 0),
+    [checkoutItems],
+  );
 
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [selectedAddress, setSelectedAddress] = useState("");
@@ -71,7 +82,7 @@ export default function CheckoutPage() {
       .map((term) => term.trim())
       .filter(Boolean);
 
-    const matched = items.some((item) =>
+    const matched = checkoutItems.some((item) =>
       terms.some((term) =>
         item.dishName.toLowerCase().includes(term),
       ),
@@ -142,7 +153,7 @@ export default function CheckoutPage() {
     );
   }
 
-  if (items.length === 0) {
+  if (checkoutItems.length === 0) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center">
         <h1 className="text-3xl font-bold text-white">
@@ -209,7 +220,7 @@ export default function CheckoutPage() {
         <input
           type="hidden"
           name="cart_items"
-          value={JSON.stringify(items)}
+          value={JSON.stringify(checkoutItems)}
         />
 
         <input
@@ -514,7 +525,7 @@ export default function CheckoutPage() {
           </h2>
 
           <div className="space-y-4">
-            {items.map((item) => (
+            {checkoutItems.map((item) => (
               <div
                 key={item.id}
                 className="flex justify-between gap-3 border-b border-[#333333] pb-3"
@@ -542,7 +553,7 @@ export default function CheckoutPage() {
             </span>
 
             <strong className="text-2xl text-[#FF5500]">
-              ₦{total.toLocaleString()}
+              ₦{checkoutTotal.toLocaleString()}
             </strong>
           </div>
 
