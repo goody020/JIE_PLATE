@@ -64,7 +64,7 @@ export default function About() {
           <p className="mt-3 leading-7 text-[#d5c2b8]">Our support team is available every day from 8am to 9pm.</p>
           <div className="mt-5 flex flex-wrap gap-4 text-sm font-bold">
             <a href="https://wa.me/2349131246555" target="_blank" rel="noreferrer" className="rounded-lg bg-[#25D366] px-4 py-3 text-black">WhatsApp: +234 913 124 6555</a>
-            <a href="mailto:ibiyemiemma11@gmail.com" className="rounded-lg border border-[#755] px-4 py-3 text-white">ibiyemiemma11@gmail.com</a>
+            <a href="mailto:buferfeast@gmail.com" className="rounded-lg border border-[#755] px-4 py-3 text-white">buferfeast@gmail.com</a>
             <Link href="/support" className="rounded-lg border border-[#755] px-4 py-3 text-white">Contact support</Link>
           </div>
         </section>

@@ -7,7 +7,7 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div>
             <Link href="/" className="flex items-center gap-2 text-2xl font-bold text-white mb-6">
-              <div className="w-10 h-10 bg-[#FF5500] rounded-full flex items-center justify-center text-white font-bold text-lg">B</div>
+              <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-white"><img src="/bufer-feast-logo.jpeg" alt="Bufer Feast" className="h-full w-full object-contain" /></div>
               Bufer Feast<span className="text-[#FF5500]">.</span>
             </Link>
             <p className="text-[#a0a0a0] text-sm leading-relaxed max-w-xs">
@@ -29,7 +29,7 @@ export function SiteFooter() {
             <div className="flex flex-col gap-4 text-sm text-[#a0a0a0]">
               <a href="https://wa.me/2349131246555" target="_blank" rel="noreferrer" className="hover:text-[#FF5500]">WhatsApp: +234 913 124 6555</a>
               <span>Support hours: Mon to Sun, 8am to 9pm</span>
-              <a href="mailto:ibiyemiemma11@gmail.com" className="hover:text-[#FF5500]">Email: ibiyemiemma11@gmail.com</a>
+              <a href="mailto:buferfeast@gmail.com" className="hover:text-[#FF5500]">Email: buferfeast@gmail.com</a>
             </div>
           </div>
 

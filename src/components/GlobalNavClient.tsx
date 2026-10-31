@@ -86,8 +86,8 @@ export default function GlobalNavClient({
           }
           className="flex items-center gap-3 shrink-0"
         >
-          <span className="w-9 h-9 rounded-full bg-[#FF5500] text-white flex items-center justify-center font-bold">
-            J
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
+            <img src="/bufer-feast-logo.jpeg" alt="Bufer Feast" className="h-full w-full object-contain" />
           </span>
 
           <span className="text-white font-bold tracking-tight">

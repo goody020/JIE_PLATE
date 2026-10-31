@@ -42,7 +42,7 @@ export default async function SupportPage() {
                 WhatsApp us · +234 913 124 6555
               </a>
               <a
-                href="mailto:ibiyemiemma11@gmail.com"
+                href="mailto:buferfeast@gmail.com"
                 className="rounded-lg border border-[#555] px-4 py-3 text-white"
               >
                 Email support
