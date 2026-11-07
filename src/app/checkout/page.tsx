@@ -14,6 +14,7 @@ import {
   Building2,
 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
+import { GoogleAddressInput } from "@/components/google-address-input";
 import {
   deleteAddress,
   getCheckoutData,
@@ -318,13 +319,10 @@ export default function CheckoutPage() {
                   className="w-full rounded-lg border border-[#333333] bg-[#0a0a0a] px-3 py-3 text-white placeholder-[#777]"
                 />
 
-                <textarea
+                <GoogleAddressInput
                   value={newAddress}
-                  onChange={(event) =>
-                    setNewAddress(event.target.value)
-                  }
-                  placeholder="Full delivery address"
-                  rows={3}
+                  onChange={setNewAddress}
+                  placeholder="Search for a full delivery address"
                   className="w-full rounded-lg border border-[#333333] bg-[#0a0a0a] px-3 py-3 text-white placeholder-[#777]"
                 />
 
