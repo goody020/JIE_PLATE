@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
 import { registerVendor } from "./actions";
+import { GoogleAddressInput } from "@/components/google-address-input";
 
 const inputClass =
   "w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100";
@@ -170,13 +171,10 @@ export default function VendorSignupPage() {
                   Kitchen location
                 </label>
 
-                <input
-                  id="location"
+                <GoogleAddressInput
                   name="location"
-                  type="text"
-                  required
+                  placeholder="Search for the full kitchen address"
                   className={inputClass}
-                  placeholder="Area, city, and state"
                 />
 
                 <p className="mt-2 text-xs text-slate-500">

@@ -3,13 +3,14 @@
 import { useEffect, useRef } from "react";
 
 type GoogleAddressInputProps = {
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
+  name?: string;
   placeholder?: string;
   className?: string;
 };
 
-export function GoogleAddressInput({ value, onChange, placeholder = "Search for an address", className = "" }: GoogleAddressInputProps) {
+export function GoogleAddressInput({ value, onChange, name, placeholder = "Search for an address", className = "" }: GoogleAddressInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export function GoogleAddressInput({ value, onChange, placeholder = "Search for 
       });
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
-        onChange(place.formatted_address || inputRef.current?.value || "");
+        onChange?.(place.formatted_address || inputRef.current?.value || "");
       });
     };
     const existing = document.getElementById(scriptId);
@@ -41,5 +42,5 @@ export function GoogleAddressInput({ value, onChange, placeholder = "Search for 
     document.head.appendChild(script);
   }, [onChange]);
 
-  return <input ref={inputRef} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className={className} />;
+  return <input ref={inputRef} name={name} value={value} onChange={(event) => onChange?.(event.target.value)} placeholder={placeholder} className={className} />;
 }
