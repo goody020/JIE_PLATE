@@ -94,6 +94,9 @@ export async function saveAddress(formData: FormData) {
 
   const label = textValue(formData.get("label"));
   const address = textValue(formData.get("address"));
+  const latitude = Number(formData.get("address_latitude"));
+  const longitude = Number(formData.get("address_longitude"));
+  const placeId = textValue(formData.get("address_place_id"));
 
   if (!label || !address) {
     throw new Error(
@@ -107,6 +110,9 @@ export async function saveAddress(formData: FormData) {
       user_id: customer.id,
       label: label.slice(0, 50),
       address: address.slice(0, 500),
+      latitude: Number.isFinite(latitude) ? latitude : null,
+      longitude: Number.isFinite(longitude) ? longitude : null,
+      place_id: placeId || null,
     });
 
   if (error) {

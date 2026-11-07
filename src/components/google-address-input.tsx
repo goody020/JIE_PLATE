@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type GoogleAddressInputProps = {
   value?: string;
@@ -12,6 +12,7 @@ type GoogleAddressInputProps = {
 
 export function GoogleAddressInput({ value, onChange, name, placeholder = "Search for an address", className = "" }: GoogleAddressInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [coordinates, setCoordinates] = useState({ latitude: "", longitude: "", placeId: "" });
 
   useEffect(() => {
     const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
@@ -26,14 +27,17 @@ export function GoogleAddressInput({ value, onChange, name, placeholder = "Searc
       });
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
-        onChange?.(place.formatted_address || inputRef.current?.value || "");
+        const address = place.formatted_address || inputRef.current?.value || "";
+        onChange?.(address);
+        setCoordinates({
+          latitude: place.geometry?.location?.lat?.()?.toString() || "",
+          longitude: place.geometry?.location?.lng?.()?.toString() || "",
+          placeId: place.place_id || "",
+        });
       });
     };
     const existing = document.getElementById(scriptId);
-    if (existing) {
-      attach();
-      return;
-    }
+    if (existing) { attach(); return; }
     const script = document.createElement("script");
     script.id = scriptId;
     script.async = true;
@@ -42,5 +46,14 @@ export function GoogleAddressInput({ value, onChange, name, placeholder = "Searc
     document.head.appendChild(script);
   }, [onChange]);
 
-  return <input ref={inputRef} name={name} value={value} onChange={(event) => onChange?.(event.target.value)} placeholder={placeholder} className={className} />;
+  return (
+    <>
+      <input ref={inputRef} name={name} value={value} onChange={(event) => onChange?.(event.target.value)} placeholder={placeholder} className={className} />
+      {name && <>
+        <input type="hidden" name={`${name}_latitude`} value={coordinates.latitude} />
+        <input type="hidden" name={`${name}_longitude`} value={coordinates.longitude} />
+        <input type="hidden" name={`${name}_place_id`} value={coordinates.placeId} />
+      </>}
+    </>
+  );
 }

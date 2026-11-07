@@ -172,6 +172,10 @@ export async function registerVendor(formData: FormData) {
     "address",
   );
 
+  const locationLatitude = Number(formData.get("location_latitude"));
+  const locationLongitude = Number(formData.get("location_longitude"));
+  const locationPlaceId = getField(formData, "location_place_id");
+
   const idProofType = getField(
     formData,
     "id_proof_type",
@@ -412,6 +416,9 @@ export async function registerVendor(formData: FormData) {
           business_name: businessName,
           vendor_type: vendorType,
           location,
+          location_latitude: Number.isFinite(locationLatitude) ? locationLatitude : null,
+          location_longitude: Number.isFinite(locationLongitude) ? locationLongitude : null,
+          location_place_id: locationPlaceId || null,
 
           role: "vendor",
           status: "pending",
