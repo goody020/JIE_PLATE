@@ -81,6 +81,28 @@ export default async function AdminDashboardPage() {
     );
   }
 
+  const { data: paidOrders, error: revenueError } = await admin
+    .from("orders")
+    .select("total_price, delivery_fee, payment_status")
+    .eq("payment_status", "paid");
+
+  if (revenueError) {
+    console.error("Paid revenue error:", revenueError.message);
+  }
+
+  const grossReceived = (paidOrders || []).reduce(
+    (sum, order) =>
+      sum + Number(order.total_price || 0) + Number(order.delivery_fee || 0),
+    0,
+  );
+  const deliveryReceived = (paidOrders || []).reduce(
+    (sum, order) => sum + Number(order.delivery_fee || 0),
+    0,
+  );
+  const commissionReceived = grossReceived * 0.1;
+  const vendorPayouts = grossReceived - commissionReceived;
+  const money = (amount: number) => `₦${amount.toLocaleString("en-NG", { maximumFractionDigits: 2 })}`;
+
   return (
     <div className="mx-auto max-w-7xl space-y-8">
       <div>
@@ -133,6 +155,13 @@ export default async function AdminDashboardPage() {
           iconClass="bg-blue-100 text-blue-600"
           linkClass="text-blue-700"
         />
+      </div>
+
+      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <RevenueCard label="Total received" value={money(grossReceived)} tone="green" />
+        <RevenueCard label="Delivery collected" value={money(deliveryReceived)} tone="blue" />
+        <RevenueCard label="Bufer Feast commission" value={money(commissionReceived)} tone="orange" />
+        <RevenueCard label="Vendor payout amount" value={money(vendorPayouts)} tone="purple" />
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -209,6 +238,30 @@ export default async function AdminDashboardPage() {
           />
         </div>
       </div>
+    </div>
+  );
+}
+
+function RevenueCard({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: string;
+  tone: "green" | "blue" | "orange" | "purple";
+}) {
+  const tones = {
+    green: "border-green-200 bg-green-50 text-green-800",
+    blue: "border-blue-200 bg-blue-50 text-blue-800",
+    orange: "border-orange-200 bg-orange-50 text-orange-800",
+    purple: "border-purple-200 bg-purple-50 text-purple-800",
+  };
+  return (
+    <div className={`rounded-2xl border p-5 shadow-sm ${tones[tone]}`}>
+      <p className="text-sm font-semibold">{label}</p>
+      <p className="mt-2 text-2xl font-black">{value}</p>
+      <p className="mt-2 text-xs opacity-75">Verified paid orders only</p>
     </div>
   );
 }
