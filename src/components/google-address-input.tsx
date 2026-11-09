@@ -12,7 +12,9 @@ type GoogleAddressInputProps = {
 
 export function GoogleAddressInput({ value, onChange, name, placeholder = "Search for an address", className = "" }: GoogleAddressInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [internalValue, setInternalValue] = useState("");
   const [coordinates, setCoordinates] = useState({ latitude: "", longitude: "", placeId: "" });
+  const currentValue = value ?? internalValue;
 
   useEffect(() => {
     const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
@@ -28,6 +30,7 @@ export function GoogleAddressInput({ value, onChange, name, placeholder = "Searc
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
         const address = place.formatted_address || inputRef.current?.value || "";
+        setInternalValue(address);
         onChange?.(address);
         setCoordinates({
           latitude: place.geometry?.location?.lat?.()?.toString() || "",
@@ -46,9 +49,14 @@ export function GoogleAddressInput({ value, onChange, name, placeholder = "Searc
     document.head.appendChild(script);
   }, [onChange]);
 
+  function handleChange(next: string) {
+    setInternalValue(next);
+    onChange?.(next);
+  }
+
   return (
     <>
-      <input ref={inputRef} name={name} value={value} onChange={(event) => onChange?.(event.target.value)} placeholder={placeholder} className={className} />
+      <input ref={inputRef} name={name} value={currentValue} onChange={(event) => handleChange(event.target.value)} placeholder={placeholder} className={className} />
       {name && <>
         <input type="hidden" name={`${name}_latitude`} value={coordinates.latitude} />
         <input type="hidden" name={`${name}_longitude`} value={coordinates.longitude} />
