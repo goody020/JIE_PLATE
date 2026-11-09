@@ -79,7 +79,9 @@ function getSupabasePublicClient() {
   }
 
   if (!key) {
-    throw new Error("Missing Supabase publishable key.");
+    throw new Error(
+      "Missing Supabase publishable or anon key.",
+    );
   }
 
   return createClient(url, key, {
@@ -89,7 +91,6 @@ function getSupabasePublicClient() {
     },
   });
 }
-
 function getSiteUrl() {
   return (
     process.env.NEXT_PUBLIC_SITE_URL ||
